@@ -20,6 +20,15 @@ pipeline {
                 sh 'gitleaks detect --source . --verbose'
             }
         }
+        
+        stage('OWASP Dependency Check') {
+           steps {
+               dependencyCheck(
+                   additionalArguments: '--scan . --format XML --format HTML',
+                   odcInstallation: 'OWASP-Dependency-Check'
+        )
+    }
+}
 
         stage('Archive Artifact') {
             steps {
