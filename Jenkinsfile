@@ -31,6 +31,17 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                        mvn sonar:sonar \
+                          -Dsonar.projectKey=simple-java-maven-jenkins
+                    '''
+                }
+            }
+        }
+
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar',
