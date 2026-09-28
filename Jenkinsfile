@@ -15,6 +15,12 @@ pipeline {
             }
         }
 
+        stage('Secret run') {
+            steps {
+                sh 'gitleaks detect --source . --verbose'
+            }
+        }
+
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar',
